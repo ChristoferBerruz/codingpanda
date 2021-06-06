@@ -1,0 +1,6 @@
+baseURL = "http://example.org/"
+languageCode = "en-us"
+title = "CodingPanda"
+theme = "uBlogger"
+[params]
+version = "2.0.X"
