@@ -1,6 +1,205 @@
-baseURL = "http://example.org/"
+baseURL = "https://blog.codingpanda.me/"
 languageCode = "en-us"
 title = "CodingPanda"
 theme = "uBlogger"
+defaultContentLanguage = "en"
 [params]
-version = "2.0.X"
+    version = "2.0.X"
+    description = "Coding and more"
+    keywords = ["Technology", "coding", "computer science"]
+    defaultTheme = "auto"
+    images = ["/images/logo.png"]
+    dateFormat = "01/02/2006"
+    [params.app]
+        title = "CodingPanda"
+
+    [params.social]
+        GitHub = "ChristoferBerruz"
+        Linkedin = "christofer-washington-berruz-chungata-319319153"
+        Email = "chris@codingpanda.me"
+        RSS = true
+
+    [params.search]
+        enable = true
+        type = "lunr"
+        contentLength = 4000
+        placeholder = ""
+        maxResultLength = 10
+        snippetLength = 30
+        highlightTag = "em"
+        absoluteURL = false
+
+    [params.header]
+        desktopMode = "fixed"
+        mobileMode = "auto"
+
+        [params.header.title]
+        logo = "/images/logo.png"
+        name = "CodingPanda"
+        pre = ""
+        post = ""
+
+    [params.footer]
+        enable = true
+        custom = ''
+        hugo = true
+        copyright = true
+        since = 2021
+
+    [params.section]
+        paginate = 20
+        dateFormat = "01/02"
+        rss = 10
+
+    [params.list]
+        paginate = 20
+        dateFormat = "01/02"
+        rss = 10
+
+    [params.home]
+        rss = 10
+        [params.home.profile]
+            enable = true
+            gravatarEmail = ""
+            avatarURL = "/images/avatar.jpg"
+            title = "CodingPanda"
+            subtitle = "A technology blog where I share my thoughts about technology, programming languages, coding, software engineering, and more!"
+            social = true
+            disclaimer = "All my opinions are mine and only mine unless noted otherwise."
+
+
+        [params.home.posts]
+            enable = true
+            paginate = 6
+    
+    [params.page]
+        theme = "classic"
+        hiddenFromHomePage = false
+        hiddenFromSearch = false
+        hiddenFeaturedImage = false
+        twemoji = false
+        lightgallery = false
+        ruby = true
+        fraction = true
+        fontawesome = true
+
+        [params.summary]
+            hiddenImage = false
+            hiddenDescription = false
+            hiddenTitle = false
+
+        [params.summary.tags]
+            theme = "image"
+            color = "white"
+            background = "black"
+            transparency = 0.9
+
+        [params.timeAgo]
+            enable = false
+            lang = "en"
+
+        [params.page.toc]
+            enable = true
+            keepStatic = true
+            auto = true
+
+        [params.page.math]
+            enable = true
+            copyTex = true
+            mhchem = true
+
+        [params.page.code]
+            copy = true
+            maxShownLines = 10
+
+        [params.page.share]
+            enable = true
+            Linkedin = true
+            Twitter = true
+            Facebook = true
+            Blogger = true
+
+
+
+[menu]
+    [[menu.main]]
+        identifier = "posts"
+        pre = ""
+        post = ""
+        name = "Posts"
+        url = "/posts/"
+        title = ""
+        weight = 1
+
+    [[menu.main]]
+        identifier = "tags"
+        pre = ""
+        post = ""
+        name = "Tags"
+        url = "/tags/"
+        title = ""
+        weight = 2
+
+    [[menu.main]]
+        identifier = "Categories"
+        pre = ""
+        post = ""
+        name = "Categories"
+        url = "/categories/"
+        title = ""
+        weight = 3
+
+[markup]
+    [markup.highlight]
+        noClasses = false
+        codeFences = true
+        guessSyntax = true
+        lineNos = false
+        lineNumbersInTable = true
+    
+    [markup.goldmark]
+        [markup.goldmark.extensions]
+            definitionList = true
+            footnote = true
+            linkify = true
+            strikethrough = true
+            table = true
+            taskList = true
+            typographer = true
+
+        [markup.goldmark.renderer]
+            unsafe = true
+
+    [markup.tableOfContents]
+        startLevel = 2
+        endLevel = 6
+
+[sitemap]
+    changefreq = "weekly"
+    filename = "sitemap.xml"
+    priority = 0.5
+
+[Permalinks]
+    posts = ":year/:month/:filename"
+
+[privacy]
+    [privacy.twitter]
+        enableDNT = true
+    [privacy.youtube]
+        privacyEnhanced = true
+
+[mediaTypes]
+    [mediaTypes."text/plain"]
+        suffixes = ["md"]
+
+[outputFormats.Markdown]
+    mediaType = "text/plain"
+    isPlainText = true
+    isHTML = false
+
+[outputs]
+    home = ["HTML", "RSS", "JSON"]
+    page = ["HTML", "MarkDown"]
+    section = ["HTML", "RSS"]
+    taxonomy = ["HTML", "RSS"]
+    taxonomyTerm = ["HTML"]
