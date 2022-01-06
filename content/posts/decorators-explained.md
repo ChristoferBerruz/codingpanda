@@ -18,7 +18,7 @@ Using decorators consists of 3 things.
 
 > In Python, `callable objects` can be treated as functions. If you want to make a class callable, you will have to implement the [`__call__`](https://docs.python.org/3/reference/datamodel.html#object.__call__) method.
 
-The decorator **syntax** is simple, yet really powerful and popular. As someone who works in developing testing infraestructure using [Pytest](https://docs.pytest.org/en/6.2.x/contents.html), decorators are used all over the place.
+The decorator **syntax** is simple, yet really powerful and popular. As someone who works in developing testing infrastructure using [Pytest](https://docs.pytest.org/en/6.2.x/contents.html), decorators are used all over the place.
 
 Let's take Pytest's well known `fixture` decorator.
 
@@ -132,7 +132,7 @@ def time_it_decorator(func):
 ```
 > Never heard of `time.perf_counter`? You can [check it out!](https://docs.python.org/3/library/time.html#time.perf_counter)
 
-> Writing code in python3 and still using `.format()` in strings? Consider using [f strings!](https://realpython.com/python-formatted-output/)
+> Writing code in python3 and still using `.format()` in strings? Consider using [f-strings!](https://realpython.com/python-formatted-output/)
 
 Now we can use our decorator!
 ```python
@@ -159,25 +159,28 @@ connect_to_database()
 ```
 
 If we run this script, we should see something like this
-```shell
+```code
 Connecting to database
 'connect_to_database' took 10.0103 seconds to complete
 ```
 
+## One small drawback
 
-## Using `wraps`
+Functions have a `__doc__` (docstring information) and `__name__` properties. To see what happens to those properties in decorated functions
+let's add some docstrings to both `connect_to_database` and `wrapped` functions.
 
-We now know that the function returned by our decorator is a wrapped version of the function passed as an argument.
+**Our goal:** see what `connect_to_database.__name__` and `connect_to_database.__doc__` are *before* and *after* applying the decorator.
 
-If you would like to preserve original function's documentation and name and for them to become properties of the `wrapped` function, we can use the [`functools.wraps`](https://docs.python.org/3/library/functools.html#functools.wraps) decorator.
-
+To do that, let's use the expanded version of the decorator syntax (without using `@`).
 ```python
-import functools
 import time
 
 def time_it_decorator(func):
-    @functools.wraps(func)
     def wrapped(*args, **kwargs):
+        """
+        Wrapped version of func that calculates the execution time
+        of func and prints it to console.
+        """
         start_time = time.perf_counter()
         result = func(*args, **kwargs)
         end_time = time.perf_counter()
@@ -188,14 +191,118 @@ def time_it_decorator(func):
 
     return wrapped
 
-@time_it
+
 def connect_to_database():
+    """
+    Connects to a database in the cloud.
+    """
     print("Connecting to database")
     time.sleep(10)
 
-connect_to_database()
+# Before decorator
+print("Before decorator")
+print(connect_to_database.__name__)
+print(connect_to_database.__doc__)
+
+# Apply decorator
+connect_to_database = time_it_decorator(connect_to_database)
+
+# After decorator
+print("After decorator")
+print(connect_to_database.__name__)
+print(connect_to_database.__doc__)
 ```
 
-This is really useful to keep the identity of the original function exposed as we apply decorators.
+If we run this script, we see
+```code
+Before decorator
+connect_to_database
 
-And... that's it! :)
+    Connects to a database in the cloud.
+
+After decorator
+wrapped
+
+        Wrapped version of func that calculates the time execution time of func and
+        prints it to console.
+```
+
+This behavior is expected. However, it is not desired because the `__name__` and `__doc__` properties of the initial function are no longer accessible.
+
+## Using `wraps` to keep `__name__` and `__doc__`
+
+If you would like to preserve the original function's documentation and name and for them to become properties of the `wrapped` function, we can use the [`functools.wraps`](https://docs.python.org/3/library/functools.html#functools.wraps) decorator.
+
+```python
+import functools
+import time
+
+def time_it_decorator(func):
+    @functools.wraps(func)
+    def wrapped(*args, **kwargs):
+        """
+        Wrapped version of func that calculates the execution time
+        of func and prints it to console.
+        """
+        start_time = time.perf_counter()
+        result = func(*args, **kwargs)
+        end_time = time.perf_counter()
+        time_taken = (end_time - start_time)
+        print(f"{func.__name__!r} took {time_taken:.4f} seconds to complete")
+
+        return result
+
+    return wrapped
+
+
+def connect_to_database():
+    """
+    Connects to a database in the cloud.
+    """
+    print("Connecting to database")
+    time.sleep(10)
+
+# Before decorator
+print("Before decorator")
+print(connect_to_database.__name__)
+print(connect_to_database.__doc__)
+
+# Apply decorator
+connect_to_database = time_it_decorator(connect_to_database)
+
+# After decorator
+print("After decorator")
+print(connect_to_database.__name__)
+print(connect_to_database.__doc__)
+```
+
+Now if we run this script
+```code
+Before decorator
+connect_to_database
+
+    Connects to a database in the cloud.
+
+After decorator
+connect_to_database
+
+    Connects to a database in the cloud.
+```
+
+We kept the original `__name__` and `__doc__` properties! This is really useful to keep the identity of the original function exposed as we apply decorators.
+
+## Conclusion
+Let's recap what we learned today:
+1. Decorators in Python are not the same as the [Decorator Design Pattern](https://en.wikipedia.org/wiki/Decorator_pattern)
+2. There a 3 components of using a decorator:
+   - The decorator
+   - The object to be decorated
+   - The `@` symbol (optional)
+3. In designing decorators, remember to define
+   - The input of the decorator
+   - The output of the decorator
+   - The extra work your decorator does on top of the original input
+4. If decorating functions, use `functools.wraps` to preserve the `__name__` and `__doc__` properties of the original function
+
+
+And... that's it! Hope you learned something useful today. Keep up in your journey in becoming an expert Python developer :)

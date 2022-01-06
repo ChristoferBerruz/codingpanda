@@ -1,22 +1,22 @@
 baseURL = "https://blog.codingpanda.me/"
 languageCode = "en-us"
-title = "CodingPanda"
+title = "Christofer Berruz Chungata's Blog"
 theme = "uBlogger"
 defaultContentLanguage = "en"
 [params]
     version = "2.0.X"
-    description = "Coding and more"
+    description = "Software Engineering & more"
     keywords = ["Technology", "coding", "computer science"]
     defaultTheme = "auto"
     images = ["/images/logo.png"]
     dateFormat = "01/02/2006"
     [params.app]
-        title = "CodingPanda"
+        title = "Christofer Berruz Chungata"
 
     [params.social]
         GitHub = "ChristoferBerruz"
         Linkedin = "christofer-washington-berruz-chungata-319319153"
-        Email = "chris@codingpanda.me"
+        Email = "cberruzc@tutanota.com"
         RSS = true
 
     [params.search]
@@ -62,7 +62,7 @@ defaultContentLanguage = "en"
             enable = true
             gravatarEmail = ""
             avatarURL = "/images/avatar.jpg"
-            title = "CodingPanda"
+            title = "Christofer Berruz Chungata's Blog"
             subtitle = "A technology blog where I share my thoughts about technology, programming languages, coding, software engineering, and more!"
             social = true
             disclaimer = "All my opinions are mine and only mine unless noted otherwise."
