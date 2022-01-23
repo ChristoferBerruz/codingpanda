@@ -128,6 +128,11 @@ defaultContentLanguage = "en"
                 theme = "dark"
                 locale = "en"
 
+        [params.analytics]
+            enable = true
+            [params.analytics.google]
+                id = "G-4VM6RLQJL3"
+                anonymizeIP = true
 
 
 [menu]
