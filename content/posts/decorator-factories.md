@@ -2,6 +2,7 @@
 title: "Decorator Factories"
 date: 2022-01-12T12:40:42-08:00
 draft: false
+tags: [decorators, python3.6+]
 ---
 
 Previously we explained the use of Decorators in Python. Today, I want to explore the concept of decorator factories and how they can be of great use when we want to **dynamically** modify the behavior of the decorator.
