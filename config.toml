@@ -131,7 +131,7 @@ defaultContentLanguage = "en"
         [params.analytics]
             enable = true
             [params.analytics.google]
-                id = "G-4VM6RLQJL3"
+                id = "UA-217783858-1 "
                 anonymizeIP = true
 
 
